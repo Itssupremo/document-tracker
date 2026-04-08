@@ -22,7 +22,7 @@ async function generateQRCode(fileId, baseUrl) {
   const escapedId = fileId.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const labelSvg = Buffer.from(`<svg width="${totalWidth}" height="${labelHeight}">
     <rect width="${totalWidth}" height="${labelHeight}" fill="white"/>
-    <text x="${totalWidth / 2}" y="${labelHeight / 2 + 6}" font-family="Arial, sans-serif"
+    <text x="${totalWidth / 2}" y="${labelHeight / 2 + 6}" font-family="Montserrat, Arial, sans-serif"
           font-size="16" font-weight="bold" fill="black" text-anchor="middle">${escapedId}</text>
   </svg>`);
 

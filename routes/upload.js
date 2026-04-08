@@ -120,7 +120,7 @@ router.post('/generate', async (req, res) => {
 
     // For the overlay, use a plain QR (without the text label)
     const QRCode = require('qrcode');
-    const plainQrBuffer = await QRCode.toBuffer(`${baseUrl}/file/${fileId}`, {
+    const plainQrBuffer = await QRCode.toBuffer(`${baseUrl}/file/${fileId}/view`, {
       type: 'png', width: 300, margin: 2, color: { dark: '#000000', light: '#ffffff' }
     });
 
@@ -142,7 +142,7 @@ router.post('/generate', async (req, res) => {
     res.status(201).json({
       message: 'QR code placed and PDF generated successfully.',
       fileId,
-      qrUrl: `${baseUrl}/file/${fileId}`,
+      qrUrl: `${baseUrl}/file/${fileId}/view`,
       qrImageUrl: `/api/qr/${fileId}`
     });
   } catch (err) {
