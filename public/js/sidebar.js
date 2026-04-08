@@ -24,7 +24,7 @@
 
     var html = '';
     html += '<div class="sidebar-brand">';
-    html += '  <h4>OCDRA <span class="accent">Document</span></h4>';
+    html += '  <h4><img src="/logo-transparent.png" alt="Logo" style="height:28px;vertical-align:middle;margin-right:6px"><span class="accent">Document</span></h4>';
     html += '  <small>Tracker System</small>';
     html += '</div>';
 
@@ -182,7 +182,7 @@
     var header = document.querySelector('.main-header');
     if (header) {
       header.className = 'public-header';
-      header.innerHTML = '<div class="brand">OCDRA <span class="accent">Document Tracker</span></div>' +
+      header.innerHTML = '<div class="brand"><img src="/logo-transparent.png" alt="Logo" style="height:24px;vertical-align:middle;margin-right:6px"><span class="accent">Document Tracker</span></div>' +
         '<a href="/login" class="btn-login-nav">Login</a>';
     }
   }
