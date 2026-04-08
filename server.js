@@ -113,6 +113,16 @@ app.get('/file/:id/view', (_req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'file-details.html'));
 });
 
+// Redirect /file/:id to /file/:id/view (for old QR codes)
+app.get('/file/:id', (req, res, next) => {
+  // Only redirect if it looks like a file ID, not an API-style sub-path
+  const { id } = req.params;
+  if (id && /^[A-Za-z0-9_-]+$/.test(id)) {
+    return res.redirect('/file/' + encodeURIComponent(id) + '/view');
+  }
+  next();
+});
+
 // Public file API endpoints (for QR scanned files)
 app.get('/api/file/:id', apiLimiter, async (req, res) => {
   try {

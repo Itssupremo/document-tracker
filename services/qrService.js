@@ -6,7 +6,7 @@ const sharp = require('sharp');
  * Uses sharp for image composition — no Puppeteer needed.
  */
 async function generateQRCode(fileId, baseUrl) {
-  const url = `${baseUrl}/file/${fileId}`;
+  const url = `${baseUrl}/file/${fileId}/view`;
 
   // Generate QR code as PNG buffer (300x300)
   const qrBuffer = await QRCode.toBuffer(url, {

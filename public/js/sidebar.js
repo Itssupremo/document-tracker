@@ -8,7 +8,7 @@
     .then(function(user) { buildSidebar(user); })
     .catch(function() {
       // Not logged in
-      if (currentPath === '/scanner' || currentPath.match(/^\/file\/.+\/view$/)) {
+      if (currentPath === '/scanner' || currentPath.match(/^\/file\/.+/)) {
         buildPublicHeader();
       } else if (currentPath !== '/login') {
         window.location.href = '/login';
