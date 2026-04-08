@@ -57,6 +57,31 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// Ensure MongoDB is connected before handling any request (critical for serverless cold starts)
+let dbReady = false;
+let dbPromise = null;
+
+function ensureDb() {
+  if (dbReady) return Promise.resolve();
+  if (!dbPromise) {
+    dbPromise = connectDb()
+      .then(() => seedAdmin())
+      .then(() => { dbReady = true; })
+      .catch(err => { dbPromise = null; throw err; });
+  }
+  return dbPromise;
+}
+
+app.use(async (_req, res, next) => {
+  try {
+    await ensureDb();
+    next();
+  } catch (err) {
+    console.error('DB connection error:', err);
+    res.status(500).json({ error: 'Database connection failed.' });
+  }
+});
+
 // Auth routes (public)
 app.use('/api/auth', authRoutes);
 
@@ -179,18 +204,21 @@ async function seedAdmin() {
   }
 }
 
-// Connect to MongoDB and start server
-connectDb()
-  .then(() => seedAdmin())
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server running at http://localhost:${PORT}`);
+// Start server only when running locally (not on Vercel)
+if (!process.env.VERCEL) {
+  connectDb()
+    .then(() => seedAdmin())
+    .then(() => {
+      dbReady = true;
+      app.listen(PORT, () => {
+        console.log(`Server running at http://localhost:${PORT}`);
+      });
+    })
+    .catch(err => {
+      console.error('Failed to start:', err);
+      process.exit(1);
     });
-  })
-  .catch(err => {
-    console.error('Failed to start:', err);
-    process.exit(1);
-  });
+}
 
 // Export for Vercel serverless
 module.exports = app;
