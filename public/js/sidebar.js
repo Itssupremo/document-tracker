@@ -193,10 +193,30 @@
     return d.innerHTML;
   }
 
+  // Inject mobile backdrop element
+  (function() {
+    var backdrop = document.createElement('div');
+    backdrop.className = 'sidebar-backdrop';
+    backdrop.id = 'sidebarBackdrop';
+    backdrop.addEventListener('click', function() {
+      var sb = document.getElementById('sidebar');
+      if (sb) sb.classList.remove('open');
+      backdrop.classList.remove('show');
+    });
+    document.body.appendChild(backdrop);
+  })();
+
   // Global functions
   window.toggleSidebar = function() {
     var sb = document.getElementById('sidebar');
-    if (sb) sb.classList.toggle('open');
+    var bd = document.getElementById('sidebarBackdrop');
+    if (sb) {
+      sb.classList.toggle('open');
+      if (bd) {
+        if (sb.classList.contains('open')) bd.classList.add('show');
+        else bd.classList.remove('show');
+      }
+    }
   };
 
   window.sidebarLogout = async function() {
