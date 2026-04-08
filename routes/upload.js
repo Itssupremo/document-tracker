@@ -7,12 +7,12 @@ const { overlayImageOnPdf, getPdfPageCount } = require('../services/pdfService')
 
 const router = express.Router();
 
-// Generate DT-YYYYMM-NN file ID
+// Generate OCDRA-YYYYMM-NN file ID
 async function generateFileId() {
   const now = new Date();
   const yyyy = now.getFullYear();
   const mm = String(now.getMonth() + 1).padStart(2, '0');
-  const prefix = `DT-${yyyy}${mm}`;
+  const prefix = `OCDRA-${yyyy}${mm}`;
 
   const latest = await File.findOne({ fileId: { $regex: `^${prefix}-` } }).sort({ fileId: -1 }).lean();
 
@@ -71,7 +71,7 @@ router.post('/', upload.single('document'), async (req, res) => {
 router.get('/preview-pdf/:fileId', async (req, res) => {
   try {
     const { fileId } = req.params;
-    if (!/^DT-\d{6}-\d{2,}$/i.test(fileId)) {
+    if (!/^OCDRA-\d{6}-\d{2,}$/i.test(fileId)) {
       return res.status(400).json({ error: 'Invalid file ID.' });
     }
 
