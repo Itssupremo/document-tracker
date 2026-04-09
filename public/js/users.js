@@ -26,10 +26,10 @@ async function loadUsers() {
         '<td><span class="badge-role ' + u.role + '">' + u.role + '</span></td>' +
         '<td>' + new Date(u.createdAt).toLocaleDateString() + '</td>' +
         '<td>' +
-        '  <button class="btn-action me-1" onclick="editUser(' + u.id + ', \'' + escapeAttr(u.username) + '\', \'' + escapeAttr(u.fullName || '') + '\', \'' + escapeAttr(u.email || '') + '\', \'' + u.role + '\')" title="Edit">' +
+        '  <button class="btn-action me-1" onclick="editUser(\'' + escapeAttr(u.id) + '\', \'' + escapeAttr(u.username) + '\', \'' + escapeAttr(u.fullName || '') + '\', \'' + escapeAttr(u.email || '') + '\', \'' + u.role + '\')" title="Edit">' +
         '    <i class="bi bi-pencil"></i>' +
         '  </button>' +
-        '  <button class="btn-action danger" onclick="deleteUser(' + u.id + ', \'' + escapeAttr(u.username) + '\')" title="Delete">' +
+        '  <button class="btn-action danger" onclick="deleteUser(\'' + escapeAttr(u.id) + '\', \'' + escapeAttr(u.username) + '\')" title="Delete">' +
         '    <i class="bi bi-trash"></i>' +
         '  </button>' +
         '</td>' +
